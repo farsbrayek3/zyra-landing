@@ -114,7 +114,7 @@ export default function Home() {
     { type: "user", text: "I'll take the 4pm slot" },
     {
       type: "bot",
-      text: "Great! Your booking is confirmed for today at 4pm. You and your stylist will receive booking confirmation and reminder emails leading up to your appointment.",
+      text: "Great! Your booking is confirmed for today at 4pm. You and your stylist will receive booking confirmation and reminder SMS leading up to your appointment.",
     },
   ];
 
