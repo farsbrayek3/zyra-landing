@@ -36,7 +36,7 @@ export default function Home() {
   // Animated chat demo
   useEffect(() => {
     const interval = setInterval(() => {
-      setChatMessages((prev) => (prev < 4 ? prev + 1 : prev));
+      setChatMessages((prev) => (prev < 6 ? prev + 1 : prev));
     }, 1500);
     return () => clearInterval(interval);
   }, []);
@@ -111,6 +111,11 @@ export default function Home() {
     { type: "user", text: "I'd like to book a haircut appointment" },
     { type: "bot", text: "Perfect! I have availability with our stylists." },
     { type: "bot", text: "📅 Available: Today 2PM, 4PM | Tomorrow 10AM, 3PM" },
+    { type: "user", text: "I'll take the 4pm slot" },
+    {
+      type: "bot",
+      text: "Great! Your booking is confirmed for today at 4pm. You and your stylist will receive booking confirmation and reminder emails leading up to your appointment.",
+    },
   ];
 
   // Structured data (JSON-LD). Placed in the body is ok for crawlers.
@@ -479,7 +484,7 @@ export default function Home() {
                         </div>
                       ))}
 
-                      {chatMessages >= 4 && (
+                      {chatMessages >= 6 && (
                         <div className="flex justify-start animate-slide-in">
                           <div className="bg-slate-700/80 backdrop-blur-sm rounded-2xl rounded-bl-sm px-5 py-3 border border-slate-600/50">
                             <div className="flex gap-2">
