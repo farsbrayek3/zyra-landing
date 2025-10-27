@@ -11,6 +11,9 @@ import {
   Sparkles,
   Star,
   ChevronDown,
+  Calendar,
+  Users,
+  TrendingUp,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -20,7 +23,7 @@ export default function Home() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeFeature, setActiveFeature] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
-  const [chatMessages, setChatMessages] = useState(0);
+  const [bookingStep, setBookingStep] = useState(0);
   const heroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -33,11 +36,11 @@ export default function Home() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Animated chat demo
+  // Animated booking flow demo
   useEffect(() => {
     const interval = setInterval(() => {
-      setChatMessages((prev) => (prev < 6 ? prev + 1 : prev));
-    }, 1500);
+      setBookingStep((prev) => (prev < 4 ? prev + 1 : 0));
+    }, 2500);
     return () => clearInterval(interval);
   }, []);
 
@@ -106,15 +109,42 @@ export default function Home() {
     },
   ];
 
-  const chatDemoMessages = [
-    { type: "bot", text: "Hi! 👋 How can I help you today?" },
-    { type: "user", text: "I'd like to book a haircut appointment" },
-    { type: "bot", text: "Perfect! I have availability with our stylists." },
-    { type: "bot", text: "📅 Available: Today 2PM, 4PM | Tomorrow 10AM, 3PM" },
-    { type: "user", text: "I'll take the 4pm slot" },
+  const bookingSteps = [
     {
-      type: "bot",
-      text: "Great! Your booking is confirmed for today at 4pm. You and your stylist will receive booking confirmation and reminder SMS leading up to your appointment.",
+      step: 1,
+      user: true,
+      message: "Hi, I'd like to get my hair done",
+      icon: "💇‍♀️",
+    },
+    {
+      step: 2,
+      user: false,
+      message: "Choose your stylist",
+      options: [
+        "Sarah - Senior Stylist",
+        "Mike - Color Specialist",
+        "Emma - Cuts & Styles",
+      ],
+      icon: "✂️",
+    },
+    {
+      step: 3,
+      user: false,
+      message: "Pick your preferred time",
+      options: [
+        "Today 2:00 PM",
+        "Today 4:00 PM",
+        "Tomorrow 10:00 AM",
+        "Tomorrow 3:00 PM",
+      ],
+      icon: "📅",
+    },
+    {
+      step: 4,
+      user: false,
+      message: "✅ Appointment confirmed! You'll receive SMS reminders.",
+      success: true,
+      icon: "🎉",
     },
   ];
 
@@ -314,11 +344,47 @@ export default function Home() {
                       salons, gyms, clinics, and spas
                     </strong>
                     .
-                    <br />
-                    <span className="text-white font-medium">
-                      Never miss a booking again.
-                    </span>
                   </p>
+
+                  {/* NEW: Key Benefits */}
+                  <div className="space-y-3 pt-2">
+                    <div className="flex items-start gap-3">
+                      <CheckCircle2
+                        className="w-6 h-6 text-green-400 flex-shrink-0 mt-0.5"
+                        aria-hidden="true"
+                      />
+                      <p className="text-lg text-white">
+                        <strong className="font-semibold">
+                          Reduce no-shows by 60%
+                        </strong>{" "}
+                        with automated SMS reminders
+                      </p>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <CheckCircle2
+                        className="w-6 h-6 text-green-400 flex-shrink-0 mt-0.5"
+                        aria-hidden="true"
+                      />
+                      <p className="text-lg text-white">
+                        <strong className="font-semibold">
+                          Manage multiple stylists
+                        </strong>{" "}
+                        and their schedules effortlessly
+                      </p>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <CheckCircle2
+                        className="w-6 h-6 text-green-400 flex-shrink-0 mt-0.5"
+                        aria-hidden="true"
+                      />
+                      <p className="text-lg text-white">
+                        <strong className="font-semibold">
+                          Free up hours every day
+                        </strong>{" "}
+                        — no more phone tag or manual booking
+                      </p>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4">
@@ -352,12 +418,12 @@ export default function Home() {
                   </Button>
                 </div>
 
-                {/* Enhanced Stats with animations */}
+                {/* Enhanced Stats with new metrics */}
                 <div className="grid grid-cols-3 gap-6 pt-8">
                   {[
-                    { value: "24/7", label: "Always Available", icon: Clock },
-                    { value: "100%", label: "Automated", icon: Zap },
-                    { value: "∞", label: "Scalable", icon: BarChart3 },
+                    { value: "60%", label: "Fewer No-Shows", icon: TrendingUp },
+                    { value: "5+", label: "Stylists Managed", icon: Users },
+                    { value: "10h", label: "Saved Per Week", icon: Clock },
                   ].map((stat, i) => (
                     <div key={i} className="relative group" aria-hidden="false">
                       <div className="relative bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-4 transition-all duration-300 group-hover:scale-105">
@@ -407,9 +473,9 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Enhanced Chat Demo Preview */}
+              {/* NEW: Simplified Booking Flow Demo */}
               <aside
-                aria-label="Chat demo preview"
+                aria-label="Booking flow demo"
                 className="relative lg:scale-110"
               >
                 {/* Glow effect */}
@@ -427,12 +493,12 @@ export default function Home() {
                       <div className="w-3 h-3 rounded-full bg-green-500/80" />
                     </div>
                     <div className="flex-1 text-center text-xs text-slate-400 font-medium">
-                      Zyra Chat Widget
+                      Client Booking Flow
                     </div>
                   </div>
 
-                  <div className="p-6">
-                    <div className="flex items-center gap-3 pb-6">
+                  <div className="p-8">
+                    <div className="flex items-center gap-3 pb-6 border-b border-slate-700/50">
                       <div className="relative">
                         <div className="w-12 h-12 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-full flex items-center justify-center shadow-lg shadow-cyan-500/30">
                           <MessageCircle
@@ -449,74 +515,110 @@ export default function Home() {
                         </div>
                         <div className="text-xs text-green-400 flex items-center gap-1">
                           <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                          Online • Typically replies instantly
+                          Ready to book
                         </div>
                       </div>
                     </div>
 
-                    {/* Animated chat messages */}
-                    <div
-                      className="space-y-4 h-80 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-slate-800/50"
-                      role="log"
-                      aria-live="polite"
-                    >
-                      {chatDemoMessages.slice(0, chatMessages).map((msg, i) => (
+                    {/* Simplified booking steps visualization */}
+                    <div className="space-y-6 py-6 min-h-[420px] flex flex-col justify-center">
+                      {bookingSteps.slice(0, bookingStep + 1).map((step, i) => (
                         <div
                           key={i}
-                          className={`flex ${
-                            msg.type === "user"
-                              ? "justify-end"
-                              : "justify-start"
-                          } animate-slide-in`}
+                          className={`animate-slide-in ${
+                            step.user ? "justify-end" : "justify-start"
+                          } flex`}
                           style={{ animationDelay: `${i * 100}ms` }}
                         >
                           <div
-                            className={`rounded-2xl px-5 py-3 max-w-[80%] shadow-lg ${
-                              msg.type === "user"
+                            className={`rounded-2xl px-6 py-4 max-w-[85%] shadow-lg ${
+                              step.success
+                                ? "bg-gradient-to-r from-green-500 to-emerald-500 text-white border-2 border-green-400"
+                                : step.user
                                 ? "bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-br-sm"
                                 : "bg-slate-700/80 backdrop-blur-sm text-slate-100 rounded-bl-sm border border-slate-600/50"
                             }`}
                           >
-                            <p className="text-sm leading-relaxed">
-                              {msg.text}
+                            <div className="flex items-center gap-3 mb-2">
+                              <span className="text-2xl" aria-hidden="true">
+                                {step.icon}
+                              </span>
+                              {!step.user && (
+                                <span className="text-xs font-semibold text-cyan-300 uppercase tracking-wide">
+                                  Step {step.step}
+                                </span>
+                              )}
+                            </div>
+                            <p className="text-base font-medium leading-relaxed mb-3">
+                              {step.message}
                             </p>
+
+                            {/* Options display */}
+                            {step.options && (
+                              <div className="space-y-2 mt-4">
+                                {step.options.map((option, idx) => (
+                                  <div
+                                    key={idx}
+                                    className="bg-slate-800/60 border border-slate-600/40 rounded-lg px-4 py-2.5 text-sm text-white hover:border-cyan-500/50 transition-all cursor-pointer hover:bg-slate-800"
+                                  >
+                                    <div className="flex items-center justify-between">
+                                      <span>{option}</span>
+                                      {idx === 0 && bookingStep === i && (
+                                        <span className="text-xs text-cyan-400 animate-pulse">
+                                          ← Select
+                                        </span>
+                                      )}
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
                           </div>
                         </div>
                       ))}
 
-                      {chatMessages >= 6 && (
-                        <div className="flex justify-start animate-slide-in">
-                          <div className="bg-slate-700/80 backdrop-blur-sm rounded-2xl rounded-bl-sm px-5 py-3 border border-slate-600/50">
-                            <div className="flex gap-2">
-                              <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce" />
-                              <div
-                                className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce"
-                                style={{ animationDelay: "0.1s" }}
-                              />
-                              <div
-                                className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce"
-                                style={{ animationDelay: "0.2s" }}
-                              />
+                      {/* Loading indicator between steps */}
+                      {bookingStep < bookingSteps.length - 1 &&
+                        bookingStep > 0 && (
+                          <div className="flex justify-start animate-slide-in">
+                            <div className="bg-slate-700/80 backdrop-blur-sm rounded-2xl rounded-bl-sm px-5 py-3 border border-slate-600/50">
+                              <div className="flex gap-2">
+                                <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce" />
+                                <div
+                                  className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce"
+                                  style={{ animationDelay: "0.1s" }}
+                                />
+                                <div
+                                  className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce"
+                                  style={{ animationDelay: "0.2s" }}
+                                />
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      )}
+                        )}
                     </div>
 
-                    <div className="mt-6 flex gap-3">
-                      <input
-                        type="text"
-                        placeholder="Type your message..."
-                        className="flex-1 bg-slate-700/50 backdrop-blur-sm border border-slate-600/50 focus:border-cyan-500 rounded-xl px-5 py-3 text-sm text-white placeholder-slate-400 focus:outline-none transition-colors duration-200"
-                        disabled
-                        aria-disabled="true"
-                      />
-                      <button
-                        aria-label="Send message (demo)"
-                        className="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-xl px-6 hover:from-cyan-400 hover:to-blue-400 transition-all duration-200 shadow-lg shadow-cyan-500/30"
-                      >
-                        <ArrowRight size={20} aria-hidden="true" />
-                      </button>
+                    {/* Progress indicator */}
+                    <div className="flex items-center justify-center gap-2 pt-4 border-t border-slate-700/50">
+                      {bookingSteps.map((_, i) => (
+                        <div
+                          key={i}
+                          className={`h-1.5 rounded-full transition-all duration-300 ${
+                            i <= bookingStep
+                              ? "w-8 bg-gradient-to-r from-cyan-400 to-blue-500"
+                              : "w-1.5 bg-slate-600"
+                          }`}
+                          aria-hidden="true"
+                        />
+                      ))}
+                    </div>
+
+                    <div className="mt-4 text-center">
+                      <p className="text-xs text-slate-400">
+                        {bookingStep === bookingSteps.length - 1
+                          ? "🎉 Booking complete in seconds!"
+                          : "Watch how simple it is..."}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -619,23 +721,23 @@ export default function Home() {
               ))}
             </div>
 
-            {/* Feature highlights */}
+            {/* Feature highlights - UPDATED */}
             <div className="mt-20 grid md:grid-cols-3 gap-6">
               {[
                 {
-                  icon: Zap,
-                  text: "Quick setup",
-                  subtext: "Get up and running fast",
+                  icon: Calendar,
+                  text: "Automated reminders",
+                  subtext: "Reduce no-shows by 60%",
                 },
                 {
-                  icon: CheckCircle2,
-                  text: "No code required",
-                  subtext: "Simple, intuitive interface",
+                  icon: Users,
+                  text: "Multi-staff scheduling",
+                  subtext: "Manage all your team members",
                 },
                 {
-                  icon: Sparkles,
-                  text: "Custom onboarding",
-                  subtext: "Optional expert setup available",
+                  icon: Clock,
+                  text: "Save 10+ hours/week",
+                  subtext: "Focus on what matters",
                 },
               ].map((item, i) => (
                 <div
